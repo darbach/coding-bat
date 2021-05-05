@@ -5,8 +5,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * <a href="https://codingbat.com/java/Map-2">Maps</a> with bulk data and loops. See the
+ * Maps with bulk data and loops. See the
  * <a href="https://codingbat.com/doc/java-map-wordcount.html">Java Map WordCount</a> for help.
+ *
+ * See <a href="https://codingbat.com/java/Map-2">https://codingbat.com/java/Map-2</a>.
  *
  * @author Daniel Arbach
  */
