@@ -20,6 +20,12 @@ class Array3Test {
     assertArrayEquals(expected, Array3.fix34(input));
   }
 
+  @ParameterizedTest(name = "[{index}]Asserting fix45({0}) = {1}")
+  @MethodSource({"edu.cnm.deepdive.array.Array3TestSource#fix45"})
+  void fix45(int[] input, int[] expected) {
+    assertArrayEquals(expected, Array3.fix45(input));
+  }
+
   @ParameterizedTest(name = "[{index}]Asserting canBalance({0}) == {1}")
   @MethodSource("edu.cnm.deepdive.array.Array3TestSource#canBalance")
   void canBalance(int[] input, boolean expected) {

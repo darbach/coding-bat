@@ -56,38 +56,55 @@ public abstract class Array3 {
    * @return The rearranged array of numbers
    */
   public static int[] fix34(int[] nums) {
-    Deque<Integer> threes = new LinkedList<>();
-    Deque<Integer> fours = new LinkedList<>();
-    // Mark the indexes for all 3s and 4s.
+    int[] arranged = new int[nums.length];
+    Deque<Integer> filler = new LinkedList<>();
+    // Fill in the 3s and 4s.
     for (int i = 0; i < nums.length; i++) {
       if (nums[i] == 3) {
-        threes.add(i);
-      } else if (nums[i] == 4) {
-        fours.add(i);
+        arranged[i] = 3;
+        arranged[i + 1] = 4;
+      } else if (nums[i] != 4) { // && nums[i] != 3, so value is a filler number
+        filler.add(nums[i]);
       }
     }
-    // Slide the 4s down or up to the 3s.
-    for (int fourIdx : fours) {
-      int threeIdx = threes.removeFirst();
-      int swapIdx = fourIdx;
-      if (threeIdx < fourIdx) { // 4 needs to slide down
-        for (int j = swapIdx - 1; j > threeIdx; j--) {
-          if (nums[j] != 3) {
-            nums[swapIdx] = nums[j];
-            swapIdx = j;
-          }
-        }
-      } else { // 4 needs to slide up
-        for (int j = swapIdx + 1; j <= threeIdx + 1; j++) {
-          if (nums[j] != 3 && nums[j] != 4) {
-            nums[swapIdx] = nums[j];
-            swapIdx = j;
-          }
-        }
+    // Fill in the rest.
+    for (int i = 0; i < arranged.length; i++) {
+      if (arranged[i] != 3 && arranged[i] != 4) {
+        arranged[i] = filler.removeFirst();
       }
-      nums[swapIdx] = 4;
     }
-    return nums;
+    return arranged;
+  }
+
+  /**
+   * (This is a slightly harder version of the fix34 problem.) Return an array that contains exactly
+   * the same numbers as the given array, but rearranged so that every 4 is immediately followed by
+   * a 5. Do not move the 4's, but every other number may move. The array contains the same number
+   * of 4's and 5's, and every 4 has a number after it that is not a 4. In this version, 5's may
+   * appear anywhere in the original array.
+   *
+   * @param nums An array of numbers to be operated upon.
+   * @return The rearranged array of numbers
+   */
+  public static int[] fix45(int[] nums) {
+    int[] arranged = new int[nums.length];
+    Deque<Integer> filler = new LinkedList<>();
+    // Fill in the 4s and 5s.
+    for (int i = 0; i < nums.length; i++) {
+      if (nums[i] == 4) {
+        arranged[i] = 4;
+        arranged[i + 1] = 5;
+      } else if (nums[i] != 5) { // && nums[i] != 4, so value is a filler number
+        filler.add(nums[i]);
+      }
+    }
+    // Fill in the rest.
+    for (int i = 0; i < arranged.length; i++) {
+      if (arranged[i] != 4 && arranged[i] != 5) {
+        arranged[i] = filler.removeFirst();
+      }
+    }
+    return arranged;
   }
 
   /**
@@ -100,18 +117,24 @@ public abstract class Array3 {
    * @param nums a set of numbers
    * @return whether there is a place to split the array
    */
-  public static boolean canBalance(int[] nums) {
-    boolean found = false;
-    int midpoint = 1;
-    while (!found && midpoint < nums.length) {
-      int[] left = Arrays.copyOfRange(nums, 0, midpoint);
-      int[] right = Arrays.copyOfRange(nums, midpoint, nums.length);
-      if (Arrays.stream(left).sum() == Arrays.stream(right).sum()) {
-        found = true;
-      }
-      midpoint++;
+  public static boolean canBalance(int[] nums) { // O(n) time, 0(1) space
+    boolean balanced = false;
+    int rightSum = 0;
+    for (int value : nums) { //calculate the total sum for a later add/subtract pass
+      rightSum += value;
     }
-    return found;
+    if (rightSum == 0) { // special case
+      balanced = true;
+    } else if (rightSum % 2 == 0){ // an odd sum cannot be balanced
+      int leftSum = 0;
+      for (int value : nums) {
+        if ((leftSum += value) == (rightSum -= value)) {
+          balanced = true;
+          break;
+        }
+      }
+    }
+    return balanced;
   }
 
 }

@@ -41,6 +41,31 @@ public class Array3TestSource {
     );
   }
 
+  static Stream<Arguments> fix45() {
+    //^.*fix45\(\[(.*)\].*\[(.*)\]\s*\[.*$
+    //Arguments.of(new int[]{$1}, new int[]{$2}),
+    return Stream.of(
+        Arguments.of(new int[]{5, 4, 9, 4, 9, 5}, new int[]{9, 4, 5, 4, 5, 9}),
+        Arguments.of(new int[]{1, 4, 1, 5}, new int[]{1, 4, 5, 1}),
+        Arguments.of(new int[]{1, 4, 1, 5, 5, 4, 1}, new int[]{1, 4, 5, 1, 1, 4, 5}),
+        Arguments.of(new int[]{4, 9, 4, 9, 5, 5, 4, 9, 5}, new int[]{4, 5, 4, 5, 9, 9, 4, 5, 9}),
+        Arguments.of(new int[]{5, 5, 4, 1, 4, 1}, new int[]{1, 1, 4, 5, 4, 5}),
+        Arguments.of(new int[]{4, 2, 2, 5}, new int[]{4, 5, 2, 2}),
+        Arguments.of(new int[]{4, 2, 4, 2, 5, 5}, new int[]{4, 5, 4, 5, 2, 2}),
+        Arguments.of(new int[]{4, 2, 4, 5, 5}, new int[]{4, 5, 4, 5, 2}),
+        Arguments.of(new int[]{1, 1, 1}, new int[]{1, 1, 1}),
+        Arguments.of(new int[]{4, 5}, new int[]{4, 5}),
+        Arguments.of(new int[]{5, 4, 1}, new int[]{1, 4, 5}),
+        Arguments.of(new int[]{}, new int[]{}),
+        Arguments.of(new int[]{5, 4, 5, 4, 1}, new int[]{1, 4, 5, 4, 5}),
+        Arguments.of(new int[]{4, 5, 4, 1, 5}, new int[]{4, 5, 4, 5, 1}),
+        Arguments.of(new int[]{3, 4, 5}, new int[]{3, 4, 5}),
+        Arguments.of(new int[]{4, 1, 5}, new int[]{4, 5, 1}),
+        Arguments.of(new int[]{5, 4, 1}, new int[]{1, 4, 5}),
+        Arguments.of(new int[]{2, 4, 2, 5}, new int[]{2, 4, 5, 2})
+    );
+  }
+
   static Stream<Arguments> canBalance() {
     return Stream.of(
         Arguments.of(new int[]{1, 1, 1, 2, 1}, true),
